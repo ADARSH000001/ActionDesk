@@ -2,13 +2,11 @@
 
 > **AI Chief of Staff for Small Businesses**
 
-<p align="center">
-  <img src="assets/images/dashboard.png" alt="ActionDesk Dashboard" width="100%">
-</p>
+![ActionDesk Dashboard](assets/images/dashboard.png)
 
-<p align="center">
-  <img src="assets/images/actions.png" alt="ActionDesk Actions" width="100%">
-</p>
+---
+
+![Action Center](assets/images/actions.png)
 
 > ActionDesk transforms scattered business communication into prioritized, actionable work. Instead of switching between Gmail, WhatsApp, invoices, and documents, business owners get one intelligent workspace that tells them exactly what needs attention.
 
