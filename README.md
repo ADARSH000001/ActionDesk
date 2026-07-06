@@ -1,82 +1,307 @@
-# ActionDesk
+# 🚀 ActionDesk
 
-An intelligent workspace that transforms scattered business communication into
-organized actions — emails, WhatsApp messages, invoices, and voice notes all
-become the same thing: an **Action Card**.
+> **AI Chief of Staff for Small Businesses**
 
-## Stack
+<p align="center">
+  <img src="assets/images/dashboard.png" alt="ActionDesk Dashboard" width="100%">
+</p>
 
-- **Next.js 14** (App Router) — single project, frontend + backend API routes
-- **Tailwind CSS** — design tokens match the Frontend Design Bible (slate +
-  blue, Linear/Notion/Stripe inspired)
-- **Groq API** — real LLM calls for extraction (`openai/gpt-oss-120b`) and
-  optional voice transcription (`whisper-large-v3`)
-- In-memory data store (`lib/store.js`) — good enough for a demo; swap for a
-  real DB later (see the Database Design doc if you write one)
+<p align="center">
+  <img src="assets/images/actions.png" alt="ActionDesk Actions" width="100%">
+</p>
 
-## Setup
+> ActionDesk transforms scattered business communication into prioritized, actionable work. Instead of switching between Gmail, WhatsApp, invoices, and documents, business owners get one intelligent workspace that tells them exactly what needs attention.
 
-```bash
-npm install
-cp .env.local.example .env.local
-# edit .env.local and paste your Groq API key
-npm run dev
-```
+---
 
-Open http://localhost:3000.
+## 📌 The Problem
 
-The key is only ever read on the server (inside API routes) — it's never
-sent to the browser.
+Small businesses receive critical information from multiple sources every day:
 
-## What's mocked vs. real
+- 📧 Gmail
+- 💬 WhatsApp
+- 📄 Invoices & Quotations
+- 🧾 PDFs
+- 🎤 Voice Notes
 
-| Piece | Status |
-|---|---|
-| Gmail / WhatsApp connectors | **Mocked** — `Sync Gmail` / `Sync WhatsApp` send canned sample messages (`lib/mockSources.js`) |
-| AI extraction (text → Action Card) | **Real** — calls the Groq API with the prompt in `lib/groq.js` |
-| Voice transcription | **Real**, with a "paste transcript" fallback for demos without an audio file |
-| Invoice text extraction | **Real** for `.txt`; basic `.pdf` text extraction via `pdf-parse` |
-| Database | In-memory only — resets when the server restarts |
+Managing these across different apps often results in:
 
-## Pages
+- Missed follow-ups
+- Delayed payments
+- Forgotten customer requests
+- Lost business opportunities
+- Constant context switching
 
-- `/` — Dashboard ("Morning Brief"): greeting, KPI cards, Today's Focus (top
-  3 pending actions), Recent Activity
-- `/action-center` — every Action Card, filterable by category / priority /
-  status, with the **AI Assist** menu on each card
-- `/imports` — paste text, upload an invoice, paste a voice transcript, or
-  sync a channel
-- `/insights` — category / source breakdown, pending payments, upcoming
-  deadlines
-- `/business-memory` — resolved actions, kept for reference
-- `/settings` — workspace info, Groq status, reset demo data
+Existing tools organize messages.
 
-## The golden rule
+**ActionDesk organizes work.**
 
-Every source — Gmail, WhatsApp, invoice, voice note — is normalized by
-`lib/groq.js` + `lib/schema.js` into the same shape:
+---
+
+# 💡 Our Solution
+
+ActionDesk acts as an **AI-powered Chief of Staff**.
+
+Instead of showing raw messages, it:
+
+- Understands incoming communication using AI
+- Extracts business context
+- Converts everything into structured **Action Cards**
+- Prioritizes urgent work
+- Generates a Morning Brief
+- Builds long-term Business Memory
+
+### Core Philosophy
+
+> **Everything is an Action.**
+
+Emails aren't important.
+
+WhatsApp messages aren't important.
+
+Invoices aren't important.
+
+**The work they create is what matters.**
+
+---
+
+# ✨ Features
+
+### 🌅 AI Morning Brief
+
+Start the day with an executive summary of everything received overnight.
+
+- Communications processed
+- Urgent actions detected
+- Estimated work time
+- Top priorities
+
+---
+
+### 📥 Unified Imports
+
+Import business communication from multiple sources.
+
+Current MVP supports:
+
+- Gmail (Mock)
+- WhatsApp (Mock)
+- Text Input
+- Invoice Upload
+- Voice Transcript
+
+Future Roadmap:
+
+- Gmail API
+- WhatsApp Business API
+- OCR
+- Live Voice Processing
+
+---
+
+### 🧠 AI Action Extraction
+
+Every communication is transformed into a standardized Action Card.
+
+Example:
 
 ```json
 {
   "title": "Invoice from ABC Traders",
-  "source": "Gmail",
   "category": "Invoice",
   "priority": "High",
   "summary": "...",
-  "deadline": "...",
-  "recommended_action": "...",
+  "recommended_action": "Pay before due date",
   "status": "Pending"
 }
 ```
 
-That's what keeps the frontend simple: one `ActionCard` component renders
-everything, regardless of where it came from.
+---
 
-## Next steps / where to extend
+### 📋 Action Center
 
-- Swap `lib/store.js` for a real database (SQLite is the easiest first step)
-- Replace `lib/mockSources.js` with real Gmail / WhatsApp Business API calls
-  — the extraction pipeline downstream doesn't need to change
-- Wire the `AI Assist` menu actions (`lib/aiAssist.js`) up to real side
-  effects (send email, create calendar event, etc.) instead of the current
-  prototype behavior
+A unified workspace where users can:
+
+- Filter actions
+- View priorities
+- Mark tasks complete
+- Receive AI recommendations
+
+---
+
+### 🗂 Business Memory
+
+Completed actions become searchable business knowledge instead of disappearing forever.
+
+---
+
+### 📊 Business Insights
+
+Gain visibility into:
+
+- Pending Payments
+- Communication Sources
+- Business Categories
+- Upcoming Deadlines
+
+---
+
+# 🏗️ Tech Stack
+
+| Layer | Technology |
+|--------|------------|
+| Frontend | Next.js 14 (App Router) |
+| Styling | Tailwind CSS |
+| AI | Groq API (`openai/gpt-oss-120b`) |
+| Speech | Groq Whisper (`whisper-large-v3`) |
+| Backend | Next.js API Routes |
+| Storage | In-Memory Store (Demo MVP) |
+
+---
+
+# ⚙️ Architecture
+
+```
+Gmail / WhatsApp / Invoice / Voice
+                │
+                ▼
+         Text Extraction
+                │
+                ▼
+          Groq AI Analysis
+                │
+                ▼
+      Standardized Action Card
+                │
+                ▼
+ Dashboard • Action Center • Insights
+```
+
+---
+
+# 📁 Project Structure
+
+```
+app/
+├── Dashboard
+├── Action Center
+├── Imports
+├── Business Memory
+├── Insights
+├── Settings
+
+components/
+├── ActionCard
+├── Sidebar
+├── Header
+├── KPI Cards
+
+lib/
+├── Groq Integration
+├── Schema
+├── Store
+├── AI Assist
+├── Mock Sources
+```
+
+---
+
+# 🚀 Getting Started
+
+```bash
+git clone <repository-url>
+
+npm install
+
+cp .env.local.example .env.local
+```
+
+Add your Groq API Key
+
+```
+GROQ_API_KEY=YOUR_KEY
+```
+
+Run
+
+```bash
+npm run dev
+```
+
+Visit
+
+```
+http://localhost:3000
+```
+
+---
+
+# 🧪 MVP Scope
+
+| Feature | Status |
+|---------|--------|
+| Gmail Sync | ✅ Mocked |
+| WhatsApp Sync | ✅ Mocked |
+| AI Extraction | ✅ Real (Groq) |
+| Invoice Upload | ✅ Supported |
+| Voice Transcript | ✅ Supported |
+| Business Memory | ✅ Implemented |
+| Insights Dashboard | ✅ Implemented |
+| OCR | 🚧 Planned |
+| Live Gmail API | 🚧 Planned |
+| WhatsApp Business API | 🚧 Planned |
+
+---
+
+# 🎯 Future Roadmap
+
+### Version 1.5
+
+- Business Memory Improvements
+- Customer Profiles
+- Search
+
+### Version 2.0
+
+- OCR
+- Voice Upload
+- Receipt Scanner
+
+### Version 2.5
+
+- Gmail API
+- WhatsApp Business API
+- Google Calendar
+
+### Version 3.0
+
+ActionDesk evolves into a true AI Operations Agent capable of:
+
+- Drafting replies
+- Scheduling meetings
+- Creating reminders
+- Triggering business workflows automatically
+
+---
+
+# 🌟 Why ActionDesk?
+
+ActionDesk doesn't replace Gmail.
+
+It doesn't replace WhatsApp.
+
+It doesn't replace your ERP.
+
+It becomes the **intelligence layer above them**, transforming fragmented communication into prioritized business actions.
+
+---
+
+# 👨‍💻 Built For
+
+**Hackathon MVP**
+
+Designed to demonstrate how AI can simplify operations for small businesses by turning scattered communication into clear, prioritized work.
+
+---
+
+## ⭐ If you like this project, consider giving it a star!
