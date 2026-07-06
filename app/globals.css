@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap");
 
 :root {
   color-scheme: dark;
@@ -22,9 +22,10 @@ body {
   background-color: rgba(59, 130, 246, 0.35);
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -32,10 +33,42 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: #334155;
   border-radius: 999px;
-  border: 2px solid #020617;
 }
 
 :focus-visible {
   outline: 2px solid #3B82F6;
   outline-offset: 2px;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1E293B 25%,
+    #263347 50%,
+    #1E293B 75%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 8px;
+}
+
+/* Card hover elevation */
+.card-hover {
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border-color: rgba(59,130,246,0.25);
+}
+
+/* Step indicator line */
+.step-line::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: #334155;
+  margin: 4px auto 0;
 }

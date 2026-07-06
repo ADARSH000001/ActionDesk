@@ -37,9 +37,33 @@ module.exports = {
           "0%": { opacity: 0, transform: "translateY(4px)" },
           "100%": { opacity: 1, transform: "translateY(0)" },
         },
+        slideUp: {
+          "0%": { opacity: 0, transform: "translateY(12px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-400px 0" },
+          "100%": { backgroundPosition: "400px 0" },
+        },
+        pulseSoft: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.5 },
+        },
+        progressFill: {
+          "0%": { width: "0%" },
+          "100%": { width: "var(--bar-width)" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 200ms ease-out",
+        slideUp: "slideUp 300ms ease-out",
+        shimmer: "shimmer 1.4s linear infinite",
+        pulseSoft: "pulseSoft 2s ease-in-out infinite",
+        progressFill: "progressFill 800ms ease-out forwards",
+      },
+      boxShadow: {
+        card: "0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
+        "card-hover": "0 8px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3)",
       },
     },
   },
