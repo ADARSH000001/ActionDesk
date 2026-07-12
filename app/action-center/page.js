@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useCards } from "@/lib/useCards";
-import ActionCard, { ActionCardSkeleton } from "@/components/ActionCard";
+import ActionCard2 from "@/components/action/ActionCard2";
+import { ActionCardSkeleton } from "@/components/ActionCard";
 import { CATEGORIES, PRIORITIES } from "@/lib/schema";
 import { SlidersHorizontal, Inbox } from "lucide-react";
 import EmptyState from "@/components/ui/EmptyState";
@@ -22,46 +23,57 @@ export default function ActionCenterPage() {
     });
   }, [cards, category, priority, status]);
 
-  const activeFilters = [category, priority, status].filter((f) => f !== "All" && f !== "Pending").length +
-    (status === "Pending" ? 0 : 1);
+  const activeFilters =
+    [category, priority].filter((f) => f !== "All").length + (status === "Pending" ? 0 : 1);
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-white">Action Center</h1>
-        <p className="mt-1 text-sm text-muted">Every action, from every source, in one place.</p>
+        <p className="mt-1 text-sm text-muted">Your executive operations console. Every action, from every source.</p>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="space-y-2">
         <div className="flex items-center gap-2 text-xs text-muted">
           <SlidersHorizontal size={13} />
-          <span>Filter</span>
+          <span>Filters</span>
           {activeFilters > 0 && (
             <span className="flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white">
               {activeFilters}
             </span>
           )}
         </div>
-        <Select value={category} onChange={setCategory} options={["All", ...CATEGORIES]} />
-        <Select value={priority} onChange={setPriority} options={["All", ...PRIORITIES]} />
-        <Select value={status} onChange={setStatus} options={["All", "Pending", "In Progress", "Done"]} />
-        {(category !== "All" || priority !== "All" || status !== "Pending") && (
-          <button
-            onClick={() => { setCategory("All"); setPriority("All"); setStatus("Pending"); }}
-            className="text-xs text-muted hover:text-slate-200 underline"
-          >
-            Reset
-          </button>
-        )}
+
+        <div className="flex flex-wrap items-end gap-4">
+          <FilterField label="Category">
+            <Select value={category} onChange={setCategory} options={["All", ...CATEGORIES]} />
+          </FilterField>
+          <FilterField label="Priority">
+            <Select value={priority} onChange={setPriority} options={["All", ...PRIORITIES]} />
+          </FilterField>
+          <FilterField label="Status">
+            <Select value={status} onChange={setStatus} options={["All", "Pending", "In Progress", "Done"]} />
+          </FilterField>
+
+          {(category !== "All" || priority !== "All" || status !== "Pending") && (
+            <button
+              onClick={() => { setCategory("All"); setPriority("All"); setStatus("Pending"); }}
+              className="mb-2 text-xs text-muted hover:text-slate-200 underline"
+            >
+              Reset
+            </button>
+          )}
+        </div>
       </div>
 
+      {/* Loading skeletons — same column layout as real content */}
       {/* Loading skeletons */}
       {loading && (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <ActionCardSkeleton />
-          <ActionCardSkeleton />
-          <ActionCardSkeleton />
+        <div className="columns-1 lg:columns-2 gap-5">
+          <div className="break-inside-avoid mb-5"><ActionCardSkeleton /></div>
+          <div className="break-inside-avoid mb-5"><ActionCardSkeleton /></div>
+          <div className="break-inside-avoid mb-5"><ActionCardSkeleton /></div>
         </div>
       )}
 
@@ -73,14 +85,26 @@ export default function ActionCenterPage() {
         />
       )}
 
-      {/* Cards grid */}
+      {/* Cards — CSS multi-column masonry so expanding one card never
+          stretches its neighbor (no shared grid row, no JS height math) */}
       {!loading && filtered.length > 0 && (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="columns-1 lg:columns-2 gap-5 pt-2">
           {filtered.map((card) => (
-            <ActionCard key={card.id} card={card} onUpdate={updateCard} />
+            <div key={card.id} className="break-inside-avoid mb-5">
+              <ActionCard2 card={card} onUpdate={updateCard} />
+            </div>
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function FilterField({ label, children }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">{label}</span>
+      {children}
     </div>
   );
 }

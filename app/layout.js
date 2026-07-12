@@ -2,6 +2,7 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import { ToastProvider } from "@/components/ui/Toast";
+import { NotificationProvider } from "@/lib/notifications";
 
 export const metadata = {
   title: {
@@ -18,27 +19,29 @@ export default function RootLayout({ children }) {
     <html lang="en" className="dark">
       <body className="font-sans antialiased">
         <ToastProvider>
-          {/* App shell: sidebar + content column */}
-          <div className="flex h-screen overflow-hidden bg-bg">
+          <NotificationProvider>
+            {/* App shell: sidebar + content column */}
+            <div className="flex h-screen overflow-hidden bg-bg">
 
-            {/* Sidebar */}
-            <Sidebar />
+              {/* Sidebar */}
+              <Sidebar />
 
-            {/* Main column */}
-            <div className="flex flex-1 flex-col overflow-hidden">
-              <Header />
+              {/* Main column */}
+              <div className="flex flex-1 flex-col overflow-hidden">
+                <Header />
 
-              {/* Page content */}
-              <main
-                id="main-content"
-                className="flex-1 overflow-y-auto scroll-smooth"
-              >
-                <div className="mx-auto max-w-5xl px-6 py-8 lg:px-8">
-                  {children}
-                </div>
-              </main>
+                {/* Page content */}
+                <main
+                  id="main-content"
+                  className="flex-1 overflow-y-auto scroll-smooth"
+                >
+                  <div className="mx-auto max-w-[1600px] px-8 py-8 lg:px-14 xl:px-20">
+                    {children}
+                  </div>
+                </main>
+              </div>
             </div>
-          </div>
+          </NotificationProvider>
         </ToastProvider>
       </body>
     </html>
