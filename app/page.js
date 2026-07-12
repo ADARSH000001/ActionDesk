@@ -39,7 +39,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* ── AI Morning Brief ── */}
-      <section className="animate-slideUp overflow-hidden rounded-card border border-border bg-card">
+      <section className="animate-slideUp overflow-hidden rounded-card border border-border bg-surface">
         {/* Top gradient bar */}
         <div className="h-1 w-full bg-gradient-to-r from-accent via-blue-400 to-accent/50" />
 
@@ -145,7 +145,7 @@ export default function DashboardPage() {
 
       {/* ── Pending count strip ── */}
       {!loading && (
-        <section className="animate-fadeIn flex items-center justify-between rounded-card border border-border bg-card px-6 py-4">
+        <section className="animate-fadeIn flex items-center justify-between rounded-card border border-border bg-surface px-6 py-4">
           <p className="text-sm text-muted">
             Total Pending Actions:{" "}
             <span className="font-semibold text-white">{pending.length}</span>

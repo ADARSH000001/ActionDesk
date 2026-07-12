@@ -14,7 +14,7 @@ export default function KpiCard({ icon: Icon, label, value, subtitle, tone = "ac
   };
 
   return (
-    <div className={`card-hover rounded-card border border-border bg-card p-5 ${ringClasses[tone]}`}>
+    <div className={`card-hover rounded-card border border-border bg-surface p-5 ${ringClasses[tone]}`}>
       <div className="flex items-center justify-between">
         <div className={`flex h-9 w-9 items-center justify-center rounded-btn ${toneClasses[tone]}`}>
           <Icon size={17} />

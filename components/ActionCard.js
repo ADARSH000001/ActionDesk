@@ -44,7 +44,7 @@ function formatDeadline(deadline) {
 
 export function ActionCardSkeleton() {
   return (
-    <div className="rounded-card border border-border bg-card p-6 space-y-4">
+    <div className="rounded-card border border-border bg-surface p-6 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
           <div className="skeleton h-5 w-16 rounded-full" />
@@ -106,7 +106,7 @@ export default function ActionCard({ card, onUpdate }) {
 
   return (
     <div
-      className={`card-hover animate-slideUp rounded-card border border-border bg-card p-6 ${done ? "opacity-60" : ""
+      className={`card-hover animate-slideUp rounded-card border border-border bg-surface p-6 ${done ? "opacity-60" : ""
         }`}
     >
       {/* Header row */}

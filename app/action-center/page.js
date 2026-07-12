@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { useCards } from "@/lib/useCards";
 import ActionCard, { ActionCardSkeleton } from "@/components/ActionCard";
 import { CATEGORIES, PRIORITIES } from "@/lib/schema";
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, Inbox } from "lucide-react";
+import EmptyState from "@/components/ui/EmptyState";
 
 export default function ActionCenterPage() {
   const { cards, loading, updateCard } = useCards();
@@ -64,13 +65,12 @@ export default function ActionCenterPage() {
         </div>
       )}
 
-      {/* Empty state */}
       {!loading && filtered.length === 0 && (
-        <div className="rounded-card border border-border bg-card p-12 text-center">
-          <p className="text-2xl">📭</p>
-          <p className="mt-2 text-sm font-medium text-slate-200">Nothing here</p>
-          <p className="mt-1 text-xs text-muted">Try a different filter, or import something from the Imports page.</p>
-        </div>
+        <EmptyState
+          icon={<Inbox size={24} />}
+          title="Nothing here"
+          message="Try a different filter, or import something from the Imports page."
+        />
       )}
 
       {/* Cards grid */}

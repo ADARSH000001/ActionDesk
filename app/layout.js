@@ -1,26 +1,45 @@
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata = {
-  title: "ActionDesk",
+  title: {
+    default: "ActionDesk",
+    template: "%s · ActionDesk",
+  },
   description:
-    "An intelligent workspace that transforms scattered business communication into organized actions.",
+    "An intelligent workspace that transforms scattered business communication into organised actions.",
+  keywords: ["business", "CRM", "invoices", "action management", "AI"],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className="font-sans antialiased">
-        <div className="flex h-screen overflow-hidden bg-bg">
-          <Sidebar />
-          <div className="flex flex-1 flex-col overflow-hidden">
-            <Header />
-            <main className="flex-1 overflow-y-auto">
-              <div className="mx-auto max-w-6xl px-8 py-8">{children}</div>
-            </main>
+        <ToastProvider>
+          {/* App shell: sidebar + content column */}
+          <div className="flex h-screen overflow-hidden bg-bg">
+
+            {/* Sidebar */}
+            <Sidebar />
+
+            {/* Main column */}
+            <div className="flex flex-1 flex-col overflow-hidden">
+              <Header />
+
+              {/* Page content */}
+              <main
+                id="main-content"
+                className="flex-1 overflow-y-auto scroll-smooth"
+              >
+                <div className="mx-auto max-w-5xl px-6 py-8 lg:px-8">
+                  {children}
+                </div>
+              </main>
+            </div>
           </div>
-        </div>
+        </ToastProvider>
       </body>
     </html>
   );
