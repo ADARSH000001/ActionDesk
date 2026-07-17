@@ -13,6 +13,8 @@ export default function BusinessMemoryPage() {
   const { cards, loading } = useIntelligence();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [bannerSource, setBannerSource] = useState(intent.from || null);
+  const dismissBanner = useCallback(() => setBannerSource(null), []);
 
   const done = cards.filter((c) => c.status === "Done");
 
@@ -51,6 +53,9 @@ export default function BusinessMemoryPage() {
 
   return (
     <div className="space-y-6">
+      {/* ── Context Banner ─────────────────────────────────── */}
+      <ContextBanner source={bannerSource} onDismiss={dismissBanner} />
+
       {/* Page header */}
       <div>
         <h1 className="text-xl font-bold text-white">Business Memory</h1>
@@ -130,7 +135,7 @@ export default function BusinessMemoryPage() {
           {done.length > 0 && filtered.length === 0 && (
             <div className="rounded-card border border-border bg-surface px-8 py-12 text-center">
               <CheckCircle2 size={22} className="mx-auto mb-3 text-muted/40" />
-              <p className="text-sm text-muted">No memories match "{query}"</p>
+              <p className="text-sm text-muted">No memories match &quot;{query}&quot;</p>
             </div>
           )}
 
@@ -148,5 +153,26 @@ export default function BusinessMemoryPage() {
         </>
       )}
     </div>
+  );
+}
+
+// ── Page export wraps inner component in Suspense (Next.js 14 requirement)
+export default function BusinessMemoryPage() {
+  return (
+    <Suspense fallback={
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-xl font-bold text-white">Business Memory</h1>
+          <p className="mt-1 text-sm text-muted">Institutional knowledge built from every resolved action.</p>
+        </div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-32 rounded-card border border-border bg-surface animate-pulse" />
+          ))}
+        </div>
+      </div>
+    }>
+      <BusinessMemoryInner />
+    </Suspense>
   );
 }
